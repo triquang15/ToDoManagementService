@@ -92,7 +92,7 @@ public class TaskController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteTask(@PathVariable Long id, @RequestBody Task reqTask) throws Exception {
+	public ResponseEntity<Void> deleteTask(@PathVariable Long id) throws Exception {
 		taskService.deleteTask(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

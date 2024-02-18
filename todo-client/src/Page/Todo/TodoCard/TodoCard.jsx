@@ -5,10 +5,14 @@ import Menu from '@mui/material/Menu';
 import UserList from '../UserList';
 import SubmissionList from './SubmissionList';
 import EditTaskCard from './EditTaskCard';
+import { useDispatch } from 'react-redux';
+import { deleteTask } from '../../../ReduxToolKit/TodoSlice';
 
 const role = "ROLE_ADMIN"
 
-const TodoCard = () => {
+const TodoCard = ({item}) => {
+    const dispatch = useDispatch();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openMenu = Boolean(anchorEl);
     const handleMenuClick = (event) => {
@@ -47,6 +51,7 @@ const TodoCard = () => {
         handleMenuClose()
     }
     const handleDeleteTask  = () => {
+        dispatch(deleteTask(item.id))
         handleMenuClose();
     }
 
@@ -56,15 +61,15 @@ const TodoCard = () => {
             <div className='card lg:flex justify-between'>
                 <div className='lg:flex gap-5 items-center space-y-2 w-[90%] lg:w-[70%]'>
                     <div className=''>
-                        <img className='lg:w-[7rem] lg:h-[7rem] object-cover' src="https://cdn.pixabay.com/photo/2023/08/28/20/32/flower-8220018_1280.jpg" alt="" />
+                        <img className='lg:w-[7rem] lg:h-[7rem] object-cover' style={{width: '400px'}} src={item.image} alt="" />
                     </div>
                     <div className='space-y-5'>
                         <div className='space-y-2'>
-                            <h1 className='font-bold text-lg'>Title 1</h1>
-                            <p className='text-gray-500 text-sm'>Description</p>
+                            <h1 className='font-bold text-lg'>{item.title}</h1>
+                            <p className='text-gray-500 text-sm'>{item.description}</p>
                         </div>
                         <div className='flex flex-wrap gap-2 items-center'>
-                            {[1, 1, 1, 1, 1].map((item) => <span className='py-1 px-5 rounded-full techStack'>Java</span>)}
+                            {item.tags.map((item) => <span className='py-1 px-5 rounded-full techStack'>{item}</span>)}
                         </div>
                     </div>
                 </div>

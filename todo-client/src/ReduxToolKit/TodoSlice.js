@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api, setAuthHeader } from "../Utils/ApiUrl";
 
 /** getAllTasks */
-export const fetchTasks = createAsyncThunk("task/fetchTaks", async ({ status }) => {
+export const fetchTasks = createAsyncThunk("task/fetchTasks", async ({ status }) => {
     setAuthHeader(localStorage.getItem("jwt"), api)
     try {
         const { data } = await api.get("/api/tasks", {
-            params: { status }
-        })
+            params: { status },
+        });
         console.log('Fetch Taks: ', data);
         return data;
     } catch (error) {
@@ -46,7 +46,7 @@ export const fetchTaskById = createAsyncThunk("task/fetchTaskById", async (taskI
 
 /** createTask */
 export const createTask = createAsyncThunk("task/createTask", async (taskData) => {
-    setAuthHeader(localStorage.getItem("jwt"), api)
+    setAuthHeader(localStorage.getItem("jwt"), api);
     try {
         const { data } = await api.post(`/api/tasks/create`, taskData);
         console.log('create Task: ', data);
@@ -72,7 +72,7 @@ export const updateTask = createAsyncThunk("task/updateTask", async ({ id, taskD
 
 /** assignTaskToUser */
 export const assignTaskToUser = createAsyncThunk("task/assignTaskToUser", async ({ id, userId }) => {
-    setAuthHeader(localStorage.getItem("jwt"), api)
+    setAuthHeader(localStorage.getItem("jwt"), api);
     try {
         const { data } = await api.put(`/api/tasks/${id}/user/${userId}/assigned`);
         console.log('assignTaskToUser: ', data);
@@ -85,7 +85,7 @@ export const assignTaskToUser = createAsyncThunk("task/assignTaskToUser", async 
 
 /** delete Task */
 export const deleteTask = createAsyncThunk("task/deleteTask", async (taskId) => {
-    setAuthHeader(localStorage.getItem("jwt"), api)
+    setAuthHeader(localStorage.getItem("jwt"), api);
     try {
         const { data } = await api.delete(`/api/tasks/${taskId}`);
         console.log('Delete Task Success: ');

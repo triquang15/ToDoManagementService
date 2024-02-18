@@ -5,6 +5,8 @@ import { Autocomplete, Button, Grid, TextField } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import { useDispatch } from 'react-redux';
+import { createTask } from '../../ReduxToolKit/TodoSlice';
 
 const style = {
     position: 'absolute',
@@ -18,8 +20,10 @@ const style = {
     p: 4,
 };
 
-const tagsName = ["Angular", "React Js", "Python", "Java", "C#"]
+const tagsName = ["Angular", "React Js", "Python", "Java", "C#", "Web Development"]
 export default function CreateTask({ handleClose, open }) {
+    const dispatch = useDispatch();
+
     const [formData, setFormData] = React.useState({
         title: "",
         image: "",
@@ -72,6 +76,7 @@ export default function CreateTask({ handleClose, open }) {
         const { deadLine } = formData;
         formData.deadLine = formatedDate(deadLine)
         formData.tags = selectedTags
+        dispatch(createTask(formData))
         console.log('formData', formData, 'deadLine', formData.deadLine);
         handleClose();
     }

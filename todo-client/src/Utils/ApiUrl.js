@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASR_URL = "http://localhost:8080"
+export const BASR_URL = "http://localhost:8085"
 export const api = axios.create({
     baseURL: BASR_URL,
     headers: {
