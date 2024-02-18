@@ -37,7 +37,7 @@ public class SubmissionController {
 
 	}
 
-	@PostMapping("/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Submission> getSubmissionById(@PathVariable Long id,
 			@RequestHeader("Authorization") String jwt) throws Exception {
 		userService.getUserProfile(jwt);
@@ -56,7 +56,7 @@ public class SubmissionController {
 	}
 
 	@GetMapping("/task/{taskId}")
-	public ResponseEntity<List<Submission>> getAllSubmission(@PathVariable Long taskId,
+	public ResponseEntity<List<Submission>> getSubmissionByTaskId(@PathVariable Long taskId,
 			@RequestHeader("Authorization") String jwt) throws Exception {
 		userService.getUserProfile(jwt);
 		List<Submission> submission = submissionService.getTaskSubmissionByTaskId(taskId);

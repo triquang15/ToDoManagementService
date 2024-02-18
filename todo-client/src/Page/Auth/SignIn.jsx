@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 
 export const SignIn = ({ togglePanel }) => {
     const [formData, setFormData] = useState({
@@ -35,6 +35,10 @@ export const SignIn = ({ togglePanel }) => {
                 <span>Can't log in ? •</span>
                 <Button onClick={togglePanel}>Create an account</Button>
             </div>
+            <Divider />
+            <h1 className='text-center mt-2 font-bold'>ATLASSIAN</h1>
+            <p className='text-center mt-2 text-xs'>One account for Jira, Confluence, Trello and more.</p>
+            <p className='text-center mt-2 text-xs'>Privacy Policy • User Notice</p>
         </div>
     )
 }

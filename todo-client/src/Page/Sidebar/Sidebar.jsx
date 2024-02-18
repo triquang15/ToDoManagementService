@@ -2,18 +2,21 @@ import { Avatar, Button } from '@mui/material'
 import React, { useState } from 'react'
 import './Sidebar.css'
 import CreateTask from '../Todo/CreateTask';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const menu = [
     { name: 'System Dashboard', value: 'System Dashboard', role: ['ROLE_ADMIN', 'ROLE_USER'] },
     { name: 'Create issue', value: '', role: ['ROLE_ADMIN'] },
+    { name: 'IN PROGRESS', value: 'IN PROGRESS', role: ['ROLE_ADMIN'] },
+    { name: 'TODO', value: 'TODO', role: ['ROLE_ADMIN'] },
     { name: 'DONE', value: 'DONE', role: ['ROLE_ADMIN', 'ROLE_USER'] },
-    { name: 'ASSIGNED', value: 'ASSIGNED', role: ['ROLE_ADMIN'] },
-    { name: 'NOT ASSIGNED', value: 'PENDING', role: ['ROLE_ADMIN'] },
     { name: 'Notification', value: 'NOTIFICATION', role: ['ROLE_USER'] }
 ]
 
 const role = 'ROLE_ADMIN';
 export const Sidebar = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [activeMenu, setActiveMenu] = useState("System Dashboard");
 
     const [openCreateTaskForm, setOpenCreateTaskForm] = React.useState(false);
@@ -26,8 +29,18 @@ export const Sidebar = () => {
     }
 
     const handleMenuChange = (item) => {
+        const updatedParams = new URLSearchParams(location.search);
         if (item.name === "Create issue") {
             handleOpencCreateTask()
+        } else if (item.name === "System Dashboard") {
+            updatedParams.delete("filter")
+            const queryString = updatedParams.toString();
+            const updatedPath = queryString ? `${location.pathname}? ${queryString}` :
+                location.pathname;
+            navigate(updatedPath);
+        } else{
+            updatedParams.set("filter", item.value);
+            navigate(`${location.pathname}?${updatedParams.toString()}`)
         }
         setActiveMenu(item.name)
     }
