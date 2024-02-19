@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import './Sidebar.css'
 import CreateTask from '../Todo/CreateTask';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../ReduxToolKit/AuthSlice';
 
 const menu = [
     { name: 'System Dashboard', value: 'System Dashboard', role: ['ROLE_ADMIN', 'ROLE_USER'] },
     { name: 'Create Todo', value: '', role: ['ROLE_ADMIN'] },
     { name: 'NEW', value: 'NEW', role: ['ROLE_ADMIN'] },
-    { name: 'IN PROGRESS', value: 'IN PROGRESS', role: ['ROLE_ADMIN'] },
+    { name: 'IN PROGRESS', value: 'IN_PROGRESS', role: ['ROLE_ADMIN'] },
     { name: 'DONE', value: 'DONE', role: ['ROLE_ADMIN', 'ROLE_USER'] },
     { name: 'Notification', value: 'NOTIFICATION', role: ['ROLE_USER'] }
 ]
@@ -17,6 +19,7 @@ const role = 'ROLE_ADMIN';
 export const Sidebar = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [activeMenu, setActiveMenu] = useState("System Dashboard");
 
     const [openCreateTaskForm, setOpenCreateTaskForm] = React.useState(false);
@@ -30,7 +33,7 @@ export const Sidebar = () => {
 
     const handleMenuChange = (item) => {
         const updatedParams = new URLSearchParams(location.search);
-        if (item.name === "Create issue") {
+        if (item.name === "Create Todo") {
             handleOpencCreateTask()
         } else if (item.name === "System Dashboard") {
             updatedParams.delete("filter")
@@ -46,6 +49,7 @@ export const Sidebar = () => {
     }
 
     const handleLogout = () => {
+        dispatch(logout());
         console.log('handleLogout');
     }
 

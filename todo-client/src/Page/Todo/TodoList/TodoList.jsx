@@ -24,7 +24,11 @@ export const TodoList = () => {
         <div className='w-[67vw]'>
             <div className='space-y-3'>
                 {
-                    task.tasks.map((item) => <TodoCard item={item} />)
+                    auth.user?.role === "ROLE_ADMIN" ?
+                        task.tasks.map((item) => (<TodoCard item={item} />)) :
+                        task.usersTask.map((item) => (
+                            <TodoCard item={item} />
+                        ))
                 }
             </div>
         </div>

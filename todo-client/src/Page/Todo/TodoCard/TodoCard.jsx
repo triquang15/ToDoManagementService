@@ -5,16 +5,16 @@ import Menu from '@mui/material/Menu';
 import UserList from '../UserList';
 import SubmissionList from './SubmissionList';
 import EditTaskCard from './EditTaskCard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask } from '../../../ReduxToolKit/TodoSlice';
 import { useLocation, useNavigate } from 'react-router';
+import SubmitModal from './SubmitModal';
 
-const role = "ROLE_ADMIN"
-
-const TodoCard = ({item}) => {
+const TodoCard = ({ item }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
+    const { auth } = useSelector(store => store)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openMenu = Boolean(anchorEl);
     const handleMenuClick = (event) => {
@@ -25,25 +25,47 @@ const TodoCard = ({item}) => {
     };
 
     const [openUserList, setOpenUserList] = useState(false);
-    const handleCloseUserList = ()=> {
+    const handleCloseUserList = () => {
         setOpenUserList(false)
     }
 
+    const [openSubmitForm, setOpenSubmitForm] = useState(false);
+    const handleCloseSubmitForm = () => {
+        setOpenSubmitForm(false)
+    }
+    const handleOpenSubmitForm = () => {
+        const updatedParams = new URLSearchParams(location.search);
+        updatedParams.set("taskId", item.id);
+        navigate(`${location.pathname}?${updatedParams.toString()}`)
+        setOpenSubmitForm(true)
+        handleMenuClose()
+    }
+
     const [openSubmissionList, setOpenSubmissionList] = useState(false);
-    const handleCloseSubmissionList = ()=> {
+    const handleCloseSubmissionList = () => {
         setOpenSubmissionList(false)
+    }
+    const handleOpenSubmitList = () => {
+        const updatedParams = new URLSearchParams(location.search);
+        updatedParams.set("taskId", item.id);
+        navigate(`${location.pathname}?${updatedParams.toString()}`)
+        setOpenSubmissionList(true)
+        handleMenuClose()
     }
 
     const handleOpenUserList = () => {
-            setOpenUserList(true);
-            handleMenuClose()
+        const updatedParams = new URLSearchParams(location.search);
+        updatedParams.set("taskId", item.id);
+        navigate(`${location.pathname}?${updatedParams.toString()}`)
+        setOpenUserList(true);
+        handleMenuClose()
     }
 
     const [openUpdateTaskForm, setOpenUpdateTaskForm] = useState(false);
-    const handleCloseUpdateTaskForm = ()=> {
+    const handleCloseUpdateTaskForm = () => {
         setOpenUpdateTaskForm(false)
     }
-    
+
     const handleRemoveTaskIdParams = () => {
         const updatedParams = new URLSearchParams(location.search);
         updatedParams.delete("filter")
@@ -55,27 +77,24 @@ const TodoCard = ({item}) => {
 
     const handleOpenUpdateTask = () => {
         const updatedParams = new URLSearchParams(location.search);
-        setOpenUpdateTaskForm(true)
         updatedParams.set("taskId", item.id);
         navigate(`${location.pathname}?${updatedParams.toString()}`)
+        setOpenUpdateTaskForm(true)
         handleMenuClose()
     }
-    const handleOpenSubmitList  = () => {
-        setOpenSubmissionList(true)
-        handleMenuClose()
-    }
-    const handleDeleteTask  = () => {
+
+    const handleDeleteTask = () => {
         dispatch(deleteTask(item.id))
         handleMenuClose();
     }
 
     return (
-      
+
         <div>
             <div className='card lg:flex justify-between'>
                 <div className='lg:flex gap-5 items-center space-y-2 w-[90%] lg:w-[70%]'>
                     <div className=''>
-                        <img className='lg:w-[7rem] lg:h-[7rem] object-cover' style={{width: '400px'}} src={item.image} alt="" />
+                        <img className='lg:w-[7rem] lg:h-[7rem] object-cover' style={{ width: '400px' }} src={item.image} alt="" />
                     </div>
                     <div className='space-y-5'>
                         <div className='space-y-2'>
@@ -104,19 +123,22 @@ const TodoCard = ({item}) => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        {role === "ROLE_ADMIN" ? <>
-                        <MenuItem onClick={handleOpenUserList}>Assign</MenuItem>
-                        <MenuItem onClick={handleOpenUpdateTask}>Edit</MenuItem>
-                        <MenuItem onClick={handleOpenSubmitList}>Watchers</MenuItem>
-                        <MenuItem onClick={handleDeleteTask}>Delete</MenuItem>
+                        {auth.user?.role === "ROLE_ADMIN" ? <>
+                            <MenuItem onClick={handleOpenUserList}>Assign</MenuItem>
+                            <MenuItem onClick={handleOpenUpdateTask}>Edit</MenuItem>
+                            <MenuItem onClick={handleOpenSubmitList}>Watchers</MenuItem>
+                            <MenuItem onClick={handleDeleteTask}>Delete</MenuItem>
                         </> :
-                            <></>}
+                            <>
+                                <MenuItem onClick={handleOpenSubmitForm}>Submit</MenuItem>
+                            </>}
                     </Menu>
                 </div>
             </div>
-            <UserList open={openUserList} handleClose={handleCloseUserList}/>
-            <SubmissionList open={openSubmissionList} handleClose={handleCloseSubmissionList}/>
-            <EditTaskCard item={item} open={openUpdateTaskForm} handleClose={handleCloseUpdateTaskForm}/>
+            <UserList open={openUserList} handleClose={handleCloseUserList} />
+            <SubmissionList open={openSubmissionList} handleClose={handleCloseSubmissionList} />
+            <EditTaskCard item={item} open={openUpdateTaskForm} handleClose={handleCloseUpdateTaskForm} />
+            <SubmitModal open={openSubmitForm} handleClose={handleCloseSubmitForm}/>
         </div>
     )
 }

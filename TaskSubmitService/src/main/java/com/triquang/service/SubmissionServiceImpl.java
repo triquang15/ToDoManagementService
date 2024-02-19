@@ -52,7 +52,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 	public Submission acceptDeadlineSubmit(Long id, String status) throws Exception {
 		Submission submission = getTaskSubmissionById(id);
 		submission.setStatus(status);
-		if (status.equals("ACCEPT")) {
+		if (status.equals("APPROVED")) {
 			taskService.completedTask(submission.getTaskId());
 		}
 

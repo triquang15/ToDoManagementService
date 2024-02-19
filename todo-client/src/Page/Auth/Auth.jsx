@@ -14,10 +14,10 @@ export const Auth = () => {
             <div className='box lg:max-w-4xl'>
                 <div className={`cover ${isRegister ? "rotate-active" : ""}`}>
                     <div className='front'>
-                        <img src="https://it4rest.com/wp-content/uploads/2022/09/1_O-tZNv1G6_Y0gGrNfJJTDA.png" alt="" />
+                        <img src="https://media.istockphoto.com/id/823194138/photo/3d-rendering-of-virtual-human-silhouette-on-laptop-screen.jpg?s=612x612&w=0&k=20&c=ZWldMJpIuajMEQ-yJjkk0L-pU3LX2DTr4DXQ88Ecfjs=" alt="" />
                     </div>
                     <div className='back'>
-                        <img src="https://it4rest.com/wp-content/uploads/2022/09/1_O-tZNv1G6_Y0gGrNfJJTDA.png" alt="" />
+                        <img src="https://media.istockphoto.com/id/1327213210/vector/trade-design-great-design-for-any-purposes-trade-concept-web-site-screen-template-forex.jpg?s=612x612&w=0&k=20&c=3XBsjW9DmgLpO8UWFq8_8Y6ogb-NvLXD8DIqri1y1mY=" alt="" />
                     </div>
                 </div>
                 <div className='forms h-full'>

@@ -71,10 +71,10 @@ export const updateTask = createAsyncThunk("task/updateTask", async ({ id, taskD
 })
 
 /** assignTaskToUser */
-export const assignTaskToUser = createAsyncThunk("task/assignTaskToUser", async ({ id, userId }) => {
+export const assignTaskToUser = createAsyncThunk("task/assignTaskToUser", async ({ taskId, userId }) => {
     setAuthHeader(localStorage.getItem("jwt"), api);
     try {
-        const { data } = await api.put(`/api/tasks/${id}/user/${userId}/assigned`);
+        const { data } = await api.put(`/api/tasks/${taskId}/user/${userId}/assigned`);
         console.log('assignTaskToUser: ', data);
         return data;
     } catch (error) {

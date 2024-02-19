@@ -3,9 +3,9 @@ import { api, setAuthHeader } from "../Utils/ApiUrl";
 
 /** submit Task*/
 export const submitTask = createAsyncThunk("submission/submitTask", async ({ taskId, githubLink }) => {
-    setAuthHeader(localStorage.getItem("jwt", api));
+    setAuthHeader(localStorage.getItem("jwt"), api);
     try {
-        const { data } = await api.post(`/api/submissions?task_id=${taskId}&github_link=${githubLink}`, {});
+        const { data } = await api.post(`/api/submissions?taskId=${taskId}&githubLink=${githubLink}`, {});
         console.log('submitTask', data);
         return data
     } catch (error) {
@@ -17,7 +17,7 @@ export const submitTask = createAsyncThunk("submission/submitTask", async ({ tas
 /** fetchAllSubmissions Task*/
 export const fetchAllSubmissions = createAsyncThunk("submission/fetchAllSubmissions",
     async () => {
-        setAuthHeader(localStorage.getItem("jwt", api));
+        setAuthHeader(localStorage.getItem("jwt") ,api);
         try {
             const { data } = await api.get(`/api/submissions`, {});
             console.log('submitTask', data);
@@ -31,7 +31,7 @@ export const fetchAllSubmissions = createAsyncThunk("submission/fetchAllSubmissi
 /** getSubmissionByTaskId Task*/
 export const getSubmissionByTaskId = createAsyncThunk("submission/getSubmissionByTaskId",
     async (taskId) => {
-        setAuthHeader(localStorage.getItem("jwt", api));
+        setAuthHeader(localStorage.getItem("jwt"),api);
         try {
             const { data } = await api.get(`/api/submissions/task/${taskId}`, {});
             console.log('get Submission By TaskId', data);
@@ -45,7 +45,7 @@ export const getSubmissionByTaskId = createAsyncThunk("submission/getSubmissionB
 /** acceptSubmission Task*/
 export const acceptSubmission = createAsyncThunk("submission/acceptSubmission",
     async ({ id, status }) => {
-        setAuthHeader(localStorage.getItem("jwt", api));
+        setAuthHeader(localStorage.getItem("jwt"), api);
         try {
             const { data } = await api.put(`/api/submissions/${id}?status=${status}`, {});
             console.log('acceptSubmission', data);
