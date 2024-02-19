@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const menu = [
     { name: 'System Dashboard', value: 'System Dashboard', role: ['ROLE_ADMIN', 'ROLE_USER'] },
-    { name: 'Create issue', value: '', role: ['ROLE_ADMIN'] },
+    { name: 'Create Todo', value: '', role: ['ROLE_ADMIN'] },
     { name: 'NEW', value: 'NEW', role: ['ROLE_ADMIN'] },
     { name: 'IN PROGRESS', value: 'IN PROGRESS', role: ['ROLE_ADMIN'] },
     { name: 'DONE', value: 'DONE', role: ['ROLE_ADMIN', 'ROLE_USER'] },

@@ -11,7 +11,6 @@ export const TodoList = () => {
     const queryParams = new URLSearchParams(location.search);
     const filterValue = queryParams.get("filter");
 
-
     useEffect(() => {
         if (auth.user?.role === "ROLE_ADMIN") {
             dispatch(fetchTasks({ status: filterValue }));

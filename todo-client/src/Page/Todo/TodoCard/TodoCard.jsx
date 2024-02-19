@@ -7,12 +7,14 @@ import SubmissionList from './SubmissionList';
 import EditTaskCard from './EditTaskCard';
 import { useDispatch } from 'react-redux';
 import { deleteTask } from '../../../ReduxToolKit/TodoSlice';
+import { useLocation, useNavigate } from 'react-router';
 
 const role = "ROLE_ADMIN"
 
 const TodoCard = ({item}) => {
     const dispatch = useDispatch();
-
+    const location = useLocation();
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const openMenu = Boolean(anchorEl);
     const handleMenuClick = (event) => {
@@ -42,8 +44,20 @@ const TodoCard = ({item}) => {
         setOpenUpdateTaskForm(false)
     }
     
+    const handleRemoveTaskIdParams = () => {
+        const updatedParams = new URLSearchParams(location.search);
+        updatedParams.delete("filter")
+        const queryString = updatedParams.toString();
+        const updatedPath = queryString ? `${location.pathname}? ${queryString}` :
+            location.pathname;
+        navigate(updatedPath);
+    }
+
     const handleOpenUpdateTask = () => {
+        const updatedParams = new URLSearchParams(location.search);
         setOpenUpdateTaskForm(true)
+        updatedParams.set("taskId", item.id);
+        navigate(`${location.pathname}?${updatedParams.toString()}`)
         handleMenuClose()
     }
     const handleOpenSubmitList  = () => {
@@ -102,7 +116,7 @@ const TodoCard = ({item}) => {
             </div>
             <UserList open={openUserList} handleClose={handleCloseUserList}/>
             <SubmissionList open={openSubmissionList} handleClose={handleCloseSubmissionList}/>
-            <EditTaskCard open={openUpdateTaskForm} handleClose={handleCloseUpdateTaskForm}/>
+            <EditTaskCard item={item} open={openUpdateTaskForm} handleClose={handleCloseUpdateTaskForm}/>
         </div>
     )
 }

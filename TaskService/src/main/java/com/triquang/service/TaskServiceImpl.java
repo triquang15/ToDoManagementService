@@ -49,6 +49,9 @@ public class TaskServiceImpl implements TaskService {
 		if (updatedTask.getImage() != null) {
 			existingTask.setImage(updatedTask.getImage());
 		}
+		if (updatedTask.getTags() != null) {
+			existingTask.setTags(updatedTask.getTags());
+		}
 		if (updatedTask.getDescription() != null) {
 			existingTask.setDescription(updatedTask.getDescription());
 		}
