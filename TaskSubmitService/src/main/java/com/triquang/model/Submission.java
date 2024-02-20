@@ -22,6 +22,5 @@ public class Submission {
 	private String githubLink;
 	private Long userId;
 	private String status = "PENDING";
-	private String description;
 	private LocalDateTime submissionTime;
 }

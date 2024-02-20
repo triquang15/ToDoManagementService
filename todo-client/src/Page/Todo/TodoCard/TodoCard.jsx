@@ -130,7 +130,7 @@ const TodoCard = ({ item }) => {
                             <MenuItem onClick={handleDeleteTask}>Delete</MenuItem>
                         </> :
                             <>
-                                <MenuItem onClick={handleOpenSubmitForm}>Submit</MenuItem>
+                                <MenuItem onClick={handleOpenSubmitForm}>Complete</MenuItem>
                             </>}
                     </Menu>
                 </div>
